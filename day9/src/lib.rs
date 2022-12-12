@@ -53,35 +53,7 @@ fn move_knot(parent: &(i32, i32), current: &(i32, i32)) -> (i32, i32) {
     }
 }
 
-fn run_knot_motion_simulation(knot_moves: &str) -> u32 {
-    let moves = build_move_list(knot_moves);
-    moves.iter()
-        .fold(
-            (&mut std::collections::BTreeSet::new(), (0_i32, 0_i32), (0_i32, 0_i32)),
-            |(set, head, tail), m| {
-                let head = move_head(&head, m);
-                let tail = move_knot(&head, &tail);
-                set.insert(tail);
-                (set, head, tail)
-            }
-        
-        )
-        .0
-        .len() as u32
-}
-
-pub fn simulate_knot_motion(input_path: &str) -> u32 {
-    let content = std::fs::read_to_string(input_path);
-    match content {
-        Ok(content) => run_knot_motion_simulation(&content),
-        Err(er) => {
-            println!("{}", er);
-            0
-        }
-    }
-}
-
-fn run_long_knot_motion_simulation(knot_moves: &str, rope_length: usize) -> u32 {
+fn run_knot_motion_simulation(knot_moves: &str, rope_length: usize) -> u32 {
     let moves = build_move_list(knot_moves);
     moves.iter()
         .fold(
@@ -102,10 +74,21 @@ fn run_long_knot_motion_simulation(knot_moves: &str, rope_length: usize) -> u32 
         .len() as u32
 }
 
+pub fn simulate_knot_motion(input_path: &str) -> u32 {
+    let content = std::fs::read_to_string(input_path);
+    match content {
+        Ok(content) => run_knot_motion_simulation(&content, 2),
+        Err(er) => {
+            println!("{}", er);
+            0
+        }
+    }
+}
+
 pub fn simulate_long_knot_motion(input_path: &str) -> u32 {
     let content = std::fs::read_to_string(input_path);
     match content {
-        Ok(content) => run_long_knot_motion_simulation(&content, 10),
+        Ok(content) => run_knot_motion_simulation(&content, 10),
         Err(er) => {
             println!("{}", er);
             0
@@ -139,11 +122,11 @@ U 20"#;
 
     #[test]
     fn test_input1() {
-        assert_eq!(run_knot_motion_simulation(TEST_INP1), 13)
+        assert_eq!(run_knot_motion_simulation(TEST_INP1, 2), 13)
     }
 
     #[test]
     fn test_input1_part2() {
-        assert_eq!(run_long_knot_motion_simulation(TEST_INP2, 10), 36)
+        assert_eq!(run_knot_motion_simulation(TEST_INP2, 10), 36)
     }
 }
