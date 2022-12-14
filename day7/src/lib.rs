@@ -111,6 +111,7 @@ impl FSNode {
         }
     }
 
+    #[allow(dead_code)]
     fn display_index(storage: &Vec<Self>, index: usize, indent: usize) {
         for _ in 0..indent {
             print!("| ");
