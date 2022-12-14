@@ -40,7 +40,6 @@ fn advance_trek(
     steps: &mut Vec<Vec<u32>>,
     queue: &mut std::collections::VecDeque<(usize, usize)>,
     dups: &mut std::collections::BTreeSet<(usize, usize)>,
-    start: (usize, usize),
     end: (usize, usize)
 ) -> u32 {
     loop {
@@ -88,7 +87,7 @@ fn trek(height_map_code: &str) -> u32 {
     steps[start.0][start.1] = 0;
     let mut queue = std::collections::VecDeque::from_iter([start]);
     let mut dups = std::collections::BTreeSet::from_iter([start]);
-    advance_trek(&height_map, &mut steps, &mut queue, &mut dups, start, end)
+    advance_trek(&height_map, &mut steps, &mut queue, &mut dups, end)
 }
 
 pub fn climb_to_best_reception(input_path: &str) -> u32 {
@@ -125,7 +124,7 @@ fn scenic_trek(height_map_code: &str) -> u32 {
             }
         );
     
-    advance_trek(&height_map, &mut steps, &mut queue, &mut dups, start, end)
+    advance_trek(&height_map, &mut steps, &mut queue, &mut dups, end)
 }
 
 pub fn find_scenic_trek(input_path: &str) -> u32 {
