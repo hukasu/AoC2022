@@ -25,6 +25,7 @@ fn build_height_map(height_map_code: &str) -> ((usize, usize), (usize, usize), V
     (start, end, heights)
 }
 
+#[allow(dead_code)]
 fn print_2d_matrix(matrix: &Vec<Vec<u32>>) {
     matrix.iter()
         .for_each(
